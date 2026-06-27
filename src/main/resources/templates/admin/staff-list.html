@@ -1,0 +1,50 @@
+<!-- src/main/resources/templates/admin/staff-list.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <title>Staff List</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Staff</h3>
+    <a class="btn btn-primary" th:href="@{/admin/staff/new}">Add Staff</a>
+  </div>
+
+  <div th:if="${staffs == null or #lists.isEmpty(staffs)}" class="alert alert-info">
+    No staff found.
+  </div>
+
+  <table th:if="${staffs != null and !#lists.isEmpty(staffs)}" class="table table-striped">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="s,iterStat : ${staffs}">
+      <td th:text="${iterStat.index + 1}"></td>
+      <td th:text="${s.username}"></td>
+      <td th:text="${s.email}"></td>
+      <td th:text="${s.phone}"></td>
+      <td>
+        <a th:href="@{/admin/staff/{id}(id=${s.id})}" class="btn btn-sm btn-outline-secondary">View</a>
+        <form th:action="@{/admin/staff/delete/{id}(id=${s.id})}" method="post" th:object="${s}" style="display:inline"
+              onsubmit="return confirm('Delete this staff?');">
+          <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <a class="btn btn-secondary mt-3" th:href="@{/admin/menu}">Back to Admin Menu</a>
+</div>
+</body>
+</html>

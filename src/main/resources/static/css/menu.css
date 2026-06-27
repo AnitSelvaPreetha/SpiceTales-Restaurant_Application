@@ -1,0 +1,66 @@
+/* Navbar */
+.navbar {
+  background: linear-gradient(90deg, #0f1724 0%, #0b1220 100%);
+  border-bottom: 3px solid rgba(252,128,25,0.12);
+  padding: 0.6rem 1rem;
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+.navbar-brand { display:flex; align-items:center; gap:.5rem; }
+.navbar-brand img { height:42px; width:auto; border-radius:6px; box-shadow:0 6px 18px rgba(12,18,27,.45); }
+.navbar-brand .fw-bold { font-size:1.25rem; color:#fc8019 !important; text-shadow:0 1px 0 rgba(0,0,0,.25); }
+.navbar-nav { gap:.6rem; }
+.navbar .nav-link { color:rgba(255,255,255,.92); padding:.45rem .6rem; border-radius:6px; transition:all 160ms; font-weight:600; }
+.navbar .nav-link.text-warning { color:#ffd28a !important; }
+.navbar .nav-link:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(252,128,25,.08); text-decoration:none; }
+.navbar .nav-link.text-danger { color:#ff6b6b !important; background:rgba(255,255,255,.03); border:1px solid rgba(255,107,107,.08); }
+.dropdown-menu { background:linear-gradient(180deg,#0c1220 0%,#07101a 100%); border:1px solid rgba(255,255,255,.06); min-width:220px; box-shadow:0 10px 30px rgba(2,6,23,.6); }
+.dropdown-item { color:#f8f8f8; padding:.55rem 1rem; transition:background 120ms; }
+.dropdown-item:hover { background:rgba(252,128,25,.08); color:#fff; }
+.navbar .form-control, .navbar .form-select { background:rgba(255,255,255,.04); color:#fff; border:1px solid rgba(255,255,255,.06); height:40px; border-radius:8px; }
+.navbar .btn-outline-warning { color:#0b1220; background:linear-gradient(90deg,#ffd28a,#fc8019); border:none; border-radius:8px; padding:.4rem .75rem; box-shadow:0 6px 20px rgba(252,128,25,.15); }
+
+/* Page & headings */
+body { background:#07101a; color:#e9eef8; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+.container { max-width:1200px; margin:0 auto; padding:2rem 1rem; }
+h2,h3 { color:#fff; text-shadow:0 2px 6px rgba(0,0,0,.6); margin-bottom:1rem; }
+h2 { font-size:1.75rem; } h3 { font-size:1.25rem; margin-top:1.6rem; }
+
+/* Dish card */
+.dish-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  border:1px solid rgba(255,255,255,0.04);
+  border-radius:12px;
+  padding:1rem;
+  transition:transform .18s, box-shadow .18s;
+  display:flex; flex-direction:column; height:100%;
+}
+.dish-card img { border-radius:10px; object-fit:cover; height:200px; width:100%; box-shadow:0 8px 28px rgba(2,6,23,.35); }
+.dish-card h5 { margin-top:.75rem; margin-bottom:.4rem; color:#fff; font-size:1.05rem; }
+.dish-card p { color:#dfe7f5; margin-bottom:.45rem; font-size:.95rem; line-height:1.25; flex-grow:1; }
+.price { color:#ffd28a; font-weight:700; }
+.badge-pill { background:rgba(255,255,255,.06); color:#fff; padding:.25rem .6rem; border-radius:999px; font-weight:700; }
+.dish-available { color:#8ef28b; } .dish-unavailable { color:#ff7b7b; opacity:.9; }
+
+/* Controls */
+.qty-controls, .card-footer, .btns-row { display:flex; align-items:center; gap:.6rem; }
+.qty-controls input[type="number"] { width:60px; text-align:center; background:rgba(255,255,255,.03); color:#fff; border:1px solid rgba(255,255,255,.06); border-radius:6px; padding:.25rem; }
+.dish-card .btn { border-radius:8px; padding:.35rem .6rem; }
+
+/* Primary actions */
+.btn-place-order { background:linear-gradient(90deg,#ffd28a,#fc8019); color:#07101a; border:none; padding:.6rem 1rem; border-radius:8px; font-weight:700; box-shadow:0 10px 30px rgba(252,128,25,.12); }
+.btn-place-order:hover { transform:translateY(-3px); }
+
+/* Card footer */
+.card-footer { justify-content:space-between; margin-top:.6rem; padding-top:.6rem; border-top:1px solid rgba(255,255,255,.03); color:#f1f6ff; font-weight:700; }
+
+/* Footer */
+footer { margin-top:3.5rem; padding:1.25rem .75rem; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-top:1px solid rgba(255,255,255,0.03); color:#dfe9f9; text-align:center; }
+footer p { margin:0; font-size:.95rem; color:#cfe5ff; opacity:.9; }
+
+/* Responsive */
+@media (max-width:991px) { .navbar .form-control, .navbar .form-select { width:140px; } }
+@media (max-width:768px) {
+  .dish-card img { height:160px; }
+  .qty-controls input[type="number"] { width:48px; }
+  .form-control { font-size:.95rem; }
+}

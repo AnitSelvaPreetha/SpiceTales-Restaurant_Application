@@ -1,0 +1,88 @@
+# Java / JVM
+*.class
+*.jar
+*.war
+*.ear
+*.iml
+
+# Build output
+/target/
+/build/
+
+# Maven
+/.mvn/
+/settings.xml
+
+# Gradle
+/.gradle/
+/gradle/
+/gradlew
+/gradlew.bat
+
+# IntelliJ IDEA
+/.idea/
+/*.iws
+/*.iml
+/*.ipr
+out/
+
+# Eclipse
+/.classpath
+/.project
+/.settings/
+
+# NetBeans
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# Spring Boot / application config
+/src/main/resources/application.properties
+/src/main/resources/application-*.properties
+/src/main/resources/application.yml
+/src/main/resources/application-*.yml
+/.env
+
+# Logs
+*.log
+/logs/
+/*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node / front-end (if any)
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn.lock
+
+# IDE config
+.vscode/
+
+# Secrets, keystores
+*.jks
+*.keystore
+*.pem
+*.crt
+*.key
+
+# Temporary files
+*.swp
+*~
+*.tmp
+
+# Git
+*.patch
+
+# CI / Docker
+docker-compose.override.yml
+.env.*.local
+
+# Misc
+coverage/
+reports/

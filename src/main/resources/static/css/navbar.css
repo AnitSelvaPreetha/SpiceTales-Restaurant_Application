@@ -1,0 +1,110 @@
+
+        /* Navbar styling (add to page for immediate use) */
+        .navbar {
+          background: linear-gradient(90deg, #0f1724 0%, #0b1220 100%);
+          border-bottom: 3px solid rgba(252, 128, 25, 0.12);
+          padding: 0.6rem 1rem;
+          font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        .navbar-brand {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+        .navbar-brand img {
+          height: 42px;
+          width: auto;
+          border-radius: 6px;
+          box-shadow: 0 6px 18px rgba(12, 18, 27, 0.45);
+        }
+        .navbar-brand .fw-bold {
+          font-size: 1.25rem;
+          letter-spacing: 0.4px;
+          color: #fc8019 !important;
+          text-shadow: 0 1px 0 rgba(0,0,0,0.25);
+        }
+        .navbar-nav {
+          gap: 0.6rem;
+        }
+        .navbar .nav-link {
+          color: rgba(255, 255, 255, 0.92);
+          padding: 0.45rem 0.6rem;
+          border-radius: 6px;
+          transition: all 160ms ease;
+          font-weight: 600;
+        }
+        .navbar .nav-link.text-warning {
+          color: #ffd28a !important;
+        }
+        .navbar .nav-link:hover {
+          transform: translateY(-2px);
+          text-decoration: none;
+          box-shadow: 0 6px 20px rgba(252, 128, 25, 0.08);
+        }
+        .navbar .nav-link.text-danger {
+          color: #ff6b6b !important;
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid rgba(255, 107, 107, 0.08);
+        }
+        .dropdown-menu {
+          background: linear-gradient(180deg, #0c1220 0%, #07101a 100%);
+          border: 1px solid rgba(255,255,255,0.06);
+          min-width: 220px;
+          box-shadow: 0 10px 30px rgba(2, 6, 23, 0.6);
+        }
+        .dropdown-item {
+          color: #f8f8f8;
+          padding: 0.55rem 1rem;
+          transition: background 120ms ease;
+        }
+        .dropdown-item:hover {
+          background: rgba(252,128,25,0.08);
+          color: #fff;
+        }
+        .navbar .form-control {
+          background: rgba(255,255,255,0.04);
+          color: #fff;
+          border: 1px solid rgba(255,255,255,0.06);
+          height: 40px;
+          border-radius: 8px;
+          padding: 0.35rem 0.75rem;
+          box-shadow: none;
+        }
+        .navbar .form-control::placeholder {
+          color: rgba(255,255,255,0.55);
+        }
+        .navbar .form-select {
+          background: rgba(255,255,255,0.04);
+          color: #fff;
+          border-radius: 8px;
+          border: 1px solid rgba(255,255,255,0.06);
+          height: 40px;
+        }
+        .navbar .btn-outline-warning {
+          color: #0b1220;
+          background: linear-gradient(90deg,#ffd28a,#fc8019);
+          border: none;
+          padding: 0.4rem 0.75rem;
+          border-radius: 8px;
+          box-shadow: 0 6px 20px rgba(252,128,25,0.15);
+        }
+        @media (max-width: 991px) {
+          .navbar .form-control, .navbar .form-select { width: 140px; }
+          .navbar .nav-link { padding: 0.5rem; }
+        }
+        .navbar .nav-item .badge {
+          background: #ffb84d;
+          color: #08101a;
+          font-weight: 700;
+          border-radius: 999px;
+          padding: 0.18rem 0.45rem;
+          font-size: 0.75rem;
+        }
+
+        /* Small visual improvements for menu cards */
+        .dish-card { transition: transform .18s ease, box-shadow .18s ease; }
+        .dish-card:hover { transform: translateY(-6px); box-shadow: 0 14px 40px rgba(2,6,23,0.35); }
+        .btn-place-order { background: linear-gradient(90deg,#ffd28a,#fc8019); border: none; color: #07101a; padding: 0.6rem 1rem; border-radius: 8px; }
+        .category-header { color: #fff; text-shadow: 0 1px 0 rgba(0,0,0,0.3); }
+        body { background-color: #07101a; color: #e9eef8; }
+        .container { max-width: 1200px; }

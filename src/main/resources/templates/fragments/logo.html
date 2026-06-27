@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="logo"></div>
+<div class="header d-flex align-items-center p-2 shadow-sm bg-white">
+    <img src="/img/profile.png" alt="Logo" class="logo-img me-3" />
+    <h5 class="mb-0 fw-semibold">Restaurant Management System</h5>
+</div>
+
+<style>
+    .logo-img {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+    }
+
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+    }
+
+    body {
+        padding-top: 60px; /* Space for fixed header */
+    }
+</style>
+
+
+
+<!-- <div th:fragment="logoFragment">
+    <img src="/img/profile.png" alt="Logo" style="width: 60px; position: absolute; top: 20px; left: 20px;">
+</div> -->
+
+</body>
+</html>
+
+<!-- fragments/logo.html -->

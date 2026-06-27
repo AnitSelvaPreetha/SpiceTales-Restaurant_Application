@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin - Manage Menu</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+		.navbar {
+				    position: fixed;
+				    top: 0;
+				    left: 0;
+				    width: 100%;
+				    background-color:#2c2c2c; /* Example background */
+				    z-index: 1000; /* Ensures navbar stays on top */
+				}
+        .theme-btn {
+            background-color: #fc8019;
+            color: white;
+        }
+        .theme-btn:hover {
+            background-color: #e26e11;
+        }
+        .section-title {
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .w-45{
+            width:48%;
+            background-color:green;
+            color:white;
+        }
+        .w-100{
+            width:48%;
+            background-color:green;
+            color:white;
+        }
+        
+        .custom-btn{
+        width:48%;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg  shadow-sm px-4" >
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+        <!-- Logo + App Name -->
+        <div class="d-flex align-items-center">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="/img/SpiceTales.jfif" style="height: 40px;" class="me-2" />
+                <span class="fw-bold" style="color: #fc8019;">Spice Tales</span>
+            </a>
+        </div>
+
+        <!-- Right Links -->
+        <ul class="navbar-nav d-flex flex-row align-items-center mb-0">
+            <li class="nav-item me-3">
+                <a class="nav-link fw-bold text-warning text-decoration-none" href="/admin/staff">View Staff</a>
+            </li>
+            <li class="nav-item me-3">
+			<li class="nav-item me-3">
+			              <a class="nav-link fw-bold text-warning text-decoration-none" href="/admin/reservations">View Resevations</a>
+			          </li>
+            <li class="nav-item me-3">
+                <a class="nav-link fw-bold text-warning text-decoration-none" href="/admin/orders">View Orders</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link fw-bold text-danger text-decoration-none" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-5">
+
+    <!-- Add Dish Form -->
+    <div class="card shadow-sm mb-5">
+        <div class="card-body">
+            <h2 class="section-title">Add New Dish</h2>
+            <form th:action="@{/admin/addDish}" th:object="${dish}" method="post"
+					enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label">Name:</label>
+                    <input type="text" th:field="*{name}" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description:</label>
+                    <input type="text" th:field="*{description}" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Price:</label>
+                    <input type="number" step="0.01" th:field="*{price}" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Category:</label>
+                    <select th:field="*{category}" class="form-select">
+                        <option value="">--select--</option>
+                        <option value="INDIAN">Indian </option>
+                        <option value="CHINESE">Chinese</option>
+                        <option value="STARTER">Starter</option>
+                        <option value="MAIN_COURSE">Main Course</option>
+                        <option value="DESSERT">Dessert</option>
+                        <option value="JUICE">Juice</option>
+                        <option value="CHAT_ITEMS">Chat Items</option>
+                    </select>
+                </div>
+				<div class="mb-3">
+					<label class="form-label">Image:</label>
+					<input type="file" name="image" required>
+				</div>
+                <button type="submit" class="btn theme-btn">Add Dish</button>
+            </form>
+        </div>
+    </div>
+
+   <h2 class="section-title mt-5">Existing Menu</h2>
+<div class="row">
+    <div class="col-md-4 mb-4" th:each="dish : ${dishes}">
+        <div class="card shadow-sm h-100 border-0">
+<!--			<img th:if="${dish.imageBase64!=null}"th:src="'data:image/jpeg;base64,'+${dish.imageBase64}"  alt="Dish Image" Width="150" height="120" class="rounded shadow">-->
+                                <img th:if="${dish.imageBase64 !=null}" th:src="'data:image/jpeg;base64,'+${dish.imageBase64}" class="card-img-top" alt="Dish Image"
+                                     style="height: 200px; object-fit: cover;">
+
+            <div class="card-body">
+                <h5 class="card-title fw-bold" th:text="${dish.name}">Dish Name</h5>
+                <p class="card-text mb-1">
+                    <strong>Description:</strong>
+                    <span th:text="${dish.description}">Sample description</span>
+                </p>
+                <p class="card-text mb-1">
+                    <strong>Category:</strong>
+                    <span th:text="${dish.category != null ? dish.category.name() : 'N/A'}">Category</span>
+                </p>
+                <p class="card-text mb-3">
+                    <strong>Price:</strong> ₹<span th:text="${dish.price}">0.0</span>
+                </p>
+                <div class="d-flex justify-content-between gap-2 mt-3">
+    <!-- Edit button as a form to match Delete -->
+    <form th:action="@{'/admin/menu/edit/' + ${dish.id}}" method="get" class="w-50">
+        <button type="submit" class="btn btn-success w-100">Edit</button>
+    </form>
+
+    <!-- Delete button -->
+    <form th:action="@{'/admin/menu/delete/' + ${dish.id}}" method="post" class="w-50">
+        <input type="hidden" name="_method" value="delete"/>
+        <button type="submit" class="btn btn-danger w-100">Delete</button>
+    </form>
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+<style>
+    footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: black; /* Adjust as needed */
+        color: white;
+        text-align: center;
+        padding: 10px;
+    }
+</style>
+ 
+<footer>
+<p>&copy; 2025 Spice Tales. All rights reserved.</p>
+</footer>
+</body>
+</html>
+
+<script>
+function toggleCategory(header) {
+    const dishList = header.nextElementSibling;
+    const icon = header.querySelector(".toggle-icon");
+
+    if (dishList.style.display === "none") {
+        dishList.style.display = "block";
+        icon.textContent = "▲";
+    } else {
+        dishList.style.display = "none";
+        icon.textContent = "▼";
+    }
+}
+</script>

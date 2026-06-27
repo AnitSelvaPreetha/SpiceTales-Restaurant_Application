@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+	<link rel="stylesheet" th:href="@{/css/background1.css}" />
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/bg-blur.css}" />
+    
+	</head>
+<body class="d-flex justify-content-between align-items-center vh-100"><!--jeff add here-->
+
+<div class="card p-4 shadow bg-blur"  style="max-width: 400px; width:100%; margin-left:170px; margin-top:70px;"> <!--jeff add card-->
+    <div class="card p-4 shadow">
+        <h2 class="text-center mb-3" style="color:#d35400">Login</h2><!--colour-->
+
+        <!-- Error message -->
+        <div th:if="${param.error}" class="alert alert-danger">Invalid username or password.</div>
+
+        <!-- Success message -->
+        <div th:if="${successMessage}" class="alert alert-success"  style="color:white" th:text="${successMessage}"></div>
+
+        <form th:action="@{/login}" method="post">
+			<div class="mb-3">
+			<label style="color:#2c3e50">Username:</label>
+			<input type="text" name="username" class="form-control" style="max-width: 380px;" 
+			                 />
+			</div>
+
+            <div class="mb-3">
+                <label style="color:#2c3e50">Password:</label>
+                <input type="password" name="password" class="form-control" style="max-width: 380px;"  required />
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" style="background-color:#fc8019; color:white;" class="btn">Login</button>
+            </div>
+        </form>
+
+        <!-- Logout message -->
+        <p th:if="${param.logout}" class="text-success mt-3" style="color:white">You have been logged out successfully.</p>
+
+        <!-- Register link inside the box -->
+        <div class="text-center mt-3">
+            <span style="color:#2c3e50">New Customer?</span>
+            <a href="/register" style="background-color:#fc8019; color:white;" class="btn btn-sm ms-2">Register</a>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

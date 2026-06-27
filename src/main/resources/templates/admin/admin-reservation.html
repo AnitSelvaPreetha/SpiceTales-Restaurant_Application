@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Reservations</title>
+    <link rel="stylesheet" href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+		.navbar {
+				    position: fixed;
+				    top: 0;
+				    left: 0;
+				    width: 100%;
+				    background-color: #2c2c2c; /* Example background */
+				    z-index: 1000; /* Ensures navbar stays on top */
+				}
+        .reservations-container {
+            max-width: 800px;
+            margin-top: 80px;
+            padding: 20px;
+            background-color: #fdfdfd;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+
+        .reservations-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .reservation-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .reservation-table th, .reservation-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .reservation-table th {
+            background-color: #fc8019;
+            color: white;
+            font-weight: bold;
+        }
+
+        .text-muted {
+            font-size: 14px;
+        }
+
+        .modal-content {
+            padding: 20px;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+		body{
+			padding-bottom: 50px;
+		}
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg  shadow-sm px-4" >
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+            <img src="/img/SpiceTales.jfif" style="height: 40px;" class="me-2">
+            <span class="fw-bold" style="color: #fc8019;">Spice Tales</span>
+        </a>
+        <ul class="navbar-nav d-flex flex-row align-items-center mb-0">
+            <li class="nav-item me-3"><a class="nav-link fw-bold text-warning text-decoration-none" href="/admin/menu">Home</a></li>
+            <li class="nav-item me-3"><a class="nav-link fw-bold text-warning text-decoration-none" href="/admin/orders">View Orders</a></li>
+            <li class="nav-item"><a class="nav-link fw-bold text-danger text-decoration-none" href="/logout">Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container reservations-container">
+    <h2 class="reservations-title">My Reservations</h2>
+
+    <table class="reservation-table">
+        <thead>
+            <tr>
+                <th>Reservation ID</th>
+                <th>Username</th>
+                <th>Check-in Date</th>
+                <th>No of Guests</th>
+                <th>Created At</th>
+				<th>Table Number</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="reservation : ${reservations}">
+                <td th:text="${reservation.id}"></td>
+                <td th:text="${reservation.user.username}"></td>
+                <td th:text="${#temporals.format(reservation.checkIn, 'dd-MM-yyyy HH:mm')}"></td>
+                <td th:text="${reservation.noOfGuests}"></td>
+                <td th:text="${#temporals.format(reservation.createdAt, 'dd-MM-yyyy HH:mm')}"></td>
+				<td th:if="${reservation.tableNumber==0 || reservation.tableNumber==-1}">Not Allocated</td>
+				<td th:unless="${reservation.tableNumber==0 || reservation.tableNumber==-1}" th:text="${reservation.tableNumber}"></td>
+                <td th:text="${reservation.status}"></td>
+                <td>
+                    <button class="btn btn-success my-2" onclick="openTableModal(this)" th:data-id="${reservation.id}" th:if="${reservation.tableNumber==0}" >Approve</button>
+					<button class="btn btn-success my-2" th:if="${reservation.tableNumber>0 || reservation.tableNumber==-1}" disabled>Approve</button>
+                    <a th:href="@{/reservations/cancel/{id}(id=${reservation.id})}"><button class="btn btn-danger my-2" th:if="${reservation.tableNumber==0}">Cancel</button></a>
+					<button class="btn btn-danger my-2" th:if="${reservation.tableNumber>0 || reservation.tableNumber==-1}" disabled>Cancel</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal for Assigning Table Number -->
+<div id="tableModal" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div th:if="${conflictError}" class="alert alert-danger text-center mx-3 mt-3">
+                <p th:text="${conflictError}"></p>
+            </div>
+
+            <form id="tableAssignmentForm" th:action="@{/reservations/approve}" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title">Assign Table Number</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Reservation ID:</strong> <span id="reservationDisplay"></span></p>
+                    <input type="hidden" id="reservationId" name="reservationId">
+                    
+                    <label for="tableNumber"><strong>Enter Table Number:</strong></label>
+                    <input type="number" class="form-control" id="tableNumber" name="tableNumber" min="1" max="10" required>
+<!--                    <option th:each="table : ${availableTables}"-->
+<!--                            th:value="${table.number}"-->
+<!--                            th:text="'Table ' + ${table.number}"-->
+<!--                            th:disabled="${table.isBooked}">-->
+<!--                    </option>-->
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Approve</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function openTableModal(button) {
+        var reservationId = button.getAttribute("data-id");
+        document.getElementById('reservationId').value = reservationId;
+        document.getElementById('reservationDisplay').innerText = reservationId;
+
+        var modal = new bootstrap.Modal(document.getElementById('tableModal'));
+        modal.show();
+    }
+</script>
+<style>
+    footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: black; /* Adjust as needed */
+        color: white;
+        text-align: center;
+        padding: 10px;
+    }
+</style>
+ 
+<footer>
+<p>&copy; 2025 Spice Tales. All rights reserved.</p>
+</footer>
+</body>
+</html>

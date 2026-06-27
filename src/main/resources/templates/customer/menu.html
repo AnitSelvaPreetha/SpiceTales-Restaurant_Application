@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Menu</title>
+    <link rel="stylesheet" href="@{/css/style.css}">
+    <link rel="stylesheet" href="@{/css/background1.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        /* Navbar styling (add to page for immediate use) */
+        .navbar {
+          background: linear-gradient(90deg, #0f1724 0%, #0b1220 100%);
+          border-bottom: 3px solid rgba(252, 128, 25, 0.12);
+          padding: 0.6rem 1rem;
+          font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        .navbar-brand {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+        .navbar-brand img {
+          height: 42px;
+          width: auto;
+          border-radius: 6px;
+          box-shadow: 0 6px 18px rgba(12, 18, 27, 0.45);
+        }
+        .navbar-brand .fw-bold {
+          font-size: 1.25rem;
+          letter-spacing: 0.4px;
+          color: #fc8019 !important;
+          text-shadow: 0 1px 0 rgba(0,0,0,0.25);
+        }
+        .navbar-nav {
+          gap: 0.6rem;
+        }
+        .navbar .nav-link {
+          color: rgba(255, 255, 255, 0.92);
+          padding: 0.45rem 0.6rem;
+          border-radius: 6px;
+          transition: all 160ms ease;
+          font-weight: 600;
+        }
+        .navbar .nav-link.text-warning {
+          color: #ffd28a !important;
+        }
+        .navbar .nav-link:hover {
+          transform: translateY(-2px);
+          text-decoration: none;
+          box-shadow: 0 6px 20px rgba(252, 128, 25, 0.08);
+        }
+        .navbar .nav-link.text-danger {
+          color: #ff6b6b !important;
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid rgba(255, 107, 107, 0.08);
+        }
+        .dropdown-menu {
+          background: linear-gradient(180deg, #0c1220 0%, #07101a 100%);
+          border: 1px solid rgba(255,255,255,0.06);
+          min-width: 220px;
+          box-shadow: 0 10px 30px rgba(2, 6, 23, 0.6);
+        }
+        .dropdown-item {
+          color: #f8f8f8;
+          padding: 0.55rem 1rem;
+          transition: background 120ms ease;
+        }
+        .dropdown-item:hover {
+          background: rgba(252,128,25,0.08);
+          color: #fff;
+        }
+        .navbar .form-control {
+          background: rgba(255,255,255,0.04);
+          color: #fff;
+          border: 1px solid rgba(255,255,255,0.06);
+          height: 40px;
+          border-radius: 8px;
+          padding: 0.35rem 0.75rem;
+          box-shadow: none;
+        }
+        .navbar .form-control::placeholder {
+          color: rgba(255,255,255,0.55);
+        }
+        .navbar .form-select {
+          background: rgba(255,255,255,0.04);
+          color: #fff;
+          border-radius: 8px;
+          border: 1px solid rgba(255,255,255,0.06);
+          height: 40px;
+        }
+        .navbar .btn-outline-warning {
+          color: #0b1220;
+          background: linear-gradient(90deg,#ffd28a,#fc8019);
+          border: none;
+          padding: 0.4rem 0.75rem;
+          border-radius: 8px;
+          box-shadow: 0 6px 20px rgba(252,128,25,0.15);
+        }
+        @media (max-width: 991px) {
+          .navbar .form-control, .navbar .form-select { width: 140px; }
+          .navbar .nav-link { padding: 0.5rem; }
+        }
+        .navbar .nav-item .badge {
+          background: #ffb84d;
+          color: #08101a;
+          font-weight: 700;
+          border-radius: 999px;
+          padding: 0.18rem 0.45rem;
+          font-size: 0.75rem;
+        }
+
+        /* Small visual improvements for menu cards */
+        .dish-card { transition: transform .18s ease, box-shadow .18s ease; }
+        .dish-card:hover { transform: translateY(-6px); box-shadow: 0 14px 40px rgba(2,6,23,0.35); }
+        .btn-place-order { background: linear-gradient(90deg,#ffd28a,#fc8019); border: none; color: #07101a; padding: 0.6rem 1rem; border-radius: 8px; }
+        .category-header { color: #fff; text-shadow: 0 1px 0 rgba(0,0,0,0.3); }
+        body { background-color: #07101a; color: #e9eef8; }
+        .container { max-width: 1200px; }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg shadow-sm px-4">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+            <img src="/img/SpiceTales.jfif" style="height: 40px;" class="me-2" alt="logo">
+            <span class="fw-bold">Spice Tales</span>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+                aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarMain">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-center">
+                <li class="nav-item dropdown me-3">
+                    <a class="nav-link dropdown-toggle fw-bold text-warning text-decoration-none" href="#" id="menuDropdown"
+                       role="button" data-bs-toggle="dropdown" aria-expanded="false">Menu</a>
+                    <ul class="dropdown-menu shadow" aria-labelledby="menuDropdown">
+                        <li><a class="dropdown-item" th:href="@{/customer/menu}">All Categories</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li th:each="c : ${categories}">
+                            <a class="dropdown-item" th:href="@{|/customer/menu?category=${c}|}" th:text="${c}">Category</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item me-3"><a class="nav-link fw-bold text-warning text-decoration-none" href="/reservations/new">Book a Table</a></li>
+                <li class="nav-item me-3"><a class="nav-link fw-bold text-warning text-decoration-none" href="/customer/orders">Your orders</a></li>
+                <li class="nav-item me-3"><a class="nav-link fw-bold text-warning text-decoration-none" href="/customer/profile">Profile</a></li>
+                <li class="nav-item"><a class="nav-link fw-bold text-danger text-decoration-none" href="/logout">Logout</a></li>
+            </ul>
+
+            <form class="d-flex me-3" role="search" method="get" th:action="@{/customer/menu}">
+                <input class="form-control me-2" type="search" placeholder="Search dishes..." aria-label="Search" name="q" th:value="${q}">
+                <select class="form-select me-2" name="category" style="width: 160px;">
+                    <option value="" th:selected="${selectedCategory == null or selectedCategory == ''}">All</option>
+                    <option th:each="c : ${categories}" th:value="${c}" th:text="${c}" th:selected="${c == selectedCategory}"></option>
+                </select>
+                <button class="btn btn-outline-warning" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<p class="text text-success text-center" th:if="${booked}" th:text="${booked}"></p>
+
+<div class="container py-4 my-5">
+    <h2>Menu</h2>
+
+    <form th:action="@{/customer/order}" method="post">
+        <div th:each="entry : ${dishesByCategory}">
+            <h3 class="category-header mt-3" th:text="${entry.key}">Category</h3>
+
+            <div class="row dish-list mt-2">
+                <div class="col-md-4 mb-4" th:each="dish : ${entry.value}">
+                    <div class="dish-card p-3 border rounded bg-white bg-opacity-3" th:id="'card-' + ${dish.id}">
+                        <img th:src="'data:image/jpeg;base64,'+${dish.imageBase64}"
+                             alt="Dish Image"
+                             class="img-fluid rounded mb-2"
+                             style="width: 100%; height: 200px; object-fit: cover;">
+
+                        <h5 th:text="${dish.name}">Dish Name</h5>
+                        <p class="mb-1" th:text="${dish.description}">Description</p>
+
+                        <p><strong>Price:</strong> ₹<span class="price" th:id="'price-' + ${dish.id}" th:text="${dish.price}">0</span></p>
+
+                        <input type="hidden" name="dishIds" th:id="'dish-' + ${dish.id}" th:value="${dish.id}" disabled>
+
+                        <button type="button" th:id="'add-btn-' + ${dish.id}" class="btn btn-sm btn-success"
+                                th:onclick="|showQtyControls(${dish.id})|">ADD</button>
+
+                        <div class="qty-controls mt-2 d-none" th:id="'qty-controls-' + ${dish.id}">
+                            <div class="input-group input-group-sm" style="width:110px;">
+                                <button type="button" class="btn btn-outline-secondary" th:onclick="|decreaseQty(${dish.id})|">-</button>
+                                <input type="number" name="quantities" th:id="'qty-' + ${dish.id}" class="form-control text-center" min="1" value="1" readonly>
+                                <button type="button" class="btn btn-outline-secondary" th:onclick="|increaseQty(${dish.id})|">+</button>
+                            </div>
+                        </div>
+
+                        <div class="card-footer mt-2 fw-bold bg-transparent border-0 p-0">
+                            Total: ₹<span th:id="'total-' + ${dish.id}" th:text="${dish.price}">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="tableNumber" class="form-label fw-bold">Table Number:</label>
+            <input type="number" name="tableNumber" id="tableNumber" class="form-control" min="1" required placeholder="Enter your table number">
+        </div>
+
+        <br/>
+        <button type="submit" class="btn-place-order btn btn-warning">Place Order</button>
+    </form>
+</div>
+
+<script>
+    function showQtyControls(id) {
+        document.getElementById('add-btn-' + id).style.display = 'none';
+        const qc = document.getElementById('qty-controls-' + id);
+        qc.classList.remove('d-none');
+        qc.style.display = 'flex';
+        document.getElementById('dish-' + id).disabled = false;
+        updateTotal(id);
+    }
+    function increaseQty(id) {
+        const input = document.getElementById('qty-' + id);
+        input.value = parseInt(input.value) + 1;
+        updateTotal(id);
+    }
+    function decreaseQty(id) {
+        const input = document.getElementById('qty-' + id);
+        let val = parseInt(input.value);
+        if (val > 1) {
+            input.value = val - 1;
+            updateTotal(id);
+        } else {
+            document.getElementById('qty-controls-' + id).classList.add('d-none');
+            document.getElementById('add-btn-' + id).style.display = 'inline-block';
+            document.getElementById('dish-' + id).disabled = true;
+            input.value = 1;
+            document.getElementById('total-' + id).textContent = "0.00";
+        }
+    }
+    function updateTotal(id) {
+        const priceEl = document.getElementById('price-' + id);
+        const price = priceEl ? parseFloat(priceEl.textContent) : 0;
+        const qty = parseInt(document.getElementById('qty-' + id).value);
+        document.getElementById('total-' + id).textContent = (price * qty).toFixed(2);
+    }
+    document.querySelector("form[th\\:action='@{/customer/order}'], form[action='/customer/order']")?.addEventListener("submit", function(event) {
+        const selectedDishes = document.querySelectorAll("input[name='dishIds']:not([disabled])");
+        if (selectedDishes.length === 0) {
+            event.preventDefault();
+            alert("Please add at least one dish before placing your order.");
+        }
+    });
+</script>
+<style>
+    /* ---------------------------
+   Card-specific readable colors
+   --------------------------- */
+
+/* Do NOT set color on .dish-card itself (avoid inheritance into navbar) */
+
+/* Title, description, price and footer inside dish card */
+.dish-card h5,
+.dish-card p,
+.dish-card .price,
+.dish-card .card-footer,
+.dish-card .badge-pill {
+  color: #f6fbff !important;        /* bright readable text inside cards */
+}
+
+/* Muted description text */
+.dish-card p {
+  color: #d7e7fb !important;
+}
+
+/* Buttons inside cards: keep button background consistent and readable */
+.dish-card .btn {
+  color: #07101a !important;
+  background: linear-gradient(90deg,#ffd28a,#fc8019);
+  border: none;
+  font-weight: 700;
+}
+
+/* Input fields inside cards: dark text on light input background */
+.dish-card .form-control,
+.dish-card input[type="number"] {
+  color: #07101a !important;
+  background: rgba(255,255,255,0.95) !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+}
+
+/* Keep the visual overlay (optional): subtle dark overlay to improve contrast without affecting navbar */
+.dish-card {
+  position: relative;
+  overflow: hidden;
+}
+.dish-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(2,6,23,0.26), rgba(2,6,23,0.10));
+  pointer-events: none;
+  border-radius: 12px;
+  z-index: 0;
+}
+/* Ensure card children render above the overlay */
+.dish-card > * { position: relative; z-index: 1; }
+
+/* If you kept Bootstrap bg-white bg-opacity classes, make them subtle */
+.bg-white.bg-opacity-3 {
+  background-color: rgba(255,255,255,0.03) !important;
+}
+
+/* ---------------------------
+   Navbar protection: ensure navbar retains its intended colors
+   --------------------------- */
+.navbar,
+.navbar * {
+  /* Reset any accidental color inheritance from card overrides */
+  color: inherit !important;
+}
+
+/* Strengthen navbar brand and link colors explicitly */
+.navbar .navbar-brand .fw-bold { color: #fc8019 !important; text-shadow: 0 1px 0 rgba(0,0,0,0.25); }
+.navbar .nav-link { color: rgba(255,255,255,0.92) !important; }
+
+/* ---------------------------
+   Small responsive tweaks
+   --------------------------- */
+@media (max-width: 768px) {
+  .dish-card img { height: 160px; }
+  .qty-controls input[type="number"] { width: 48px; }
+}
+
+</style>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+```
