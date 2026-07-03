@@ -68,7 +68,7 @@ The **Restaurant Management System** is a web-based application developed using 
 * Spring Data JPA
 * Spring Security
 * Thymeleaf
-* MySQL / H2 Database
+* MySQL
 * Maven
 * HTML
 * CSS
